@@ -1,0 +1,8 @@
+.astro
+dist
+node_modules
+
+# Local development files
+# Goal: Exclude user-specific local configuration and temporary files
+# Impl: Match any file with .local. pattern (e.g., settings.local.json, CLAUDE.local.md)
+*.local.*
