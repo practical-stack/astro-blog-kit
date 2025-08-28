@@ -56,9 +56,21 @@ Analyze `git diff` between current HEAD and base branch:
 - Extract from code comments, especially `@context`, `@see` tags
 - Look for contextual comments even without specific tags
 
-### References Section
+### References Section (optional)
 - Extract URLs and `@see` references from comments
 - Include related documentation links
+- Include OTHER related issues (not the current issue being resolved)
+- Leave empty if no other related issues exist
+
+### Human Check Section
+- Always add human verification section at the end:
+```markdown
+---
+## Human Check 
+🤖 Generated with [Claude Code](https://claude.ai/code)
+- [ ] I reviewed it 
+---
+```
 
 ## PR Creation Process
 
