@@ -1,0 +1,27 @@
+- name: "bug"
+  color: "d73a49"
+  description: "Something isn't working"
+
+- name: "doc"
+  color: "0075ca"
+  description: "Improvements or additions to documentation"
+
+- name: "feat-agent"
+  color: "0052cc"
+  description: "add rule, command for agent like claude code, cursor"
+
+- name: "feat-component"
+  color: "0052cc"
+  description: "add component"
+
+- name: "feat-config"
+  color: "0052cc"
+  description: "repo-setup, config, ci/cd"
+
+- name: "feat-util"
+  color: "0052cc"
+  description: "base-utility"
+
+- name: "good first issue"
+  color: "7057ff"
+  description: "Good for newcomers"
