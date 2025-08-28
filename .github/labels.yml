@@ -6,21 +6,17 @@
   color: "0075ca"
   description: "Improvements or additions to documentation"
 
-- name: "feat-agent"
+- name: "agent"
   color: "0052cc"
   description: "add rule, command for agent like claude code, cursor"
 
-- name: "feat-component"
-  color: "0052cc"
-  description: "add component"
-
-- name: "feat-config"
+- name: "config"
   color: "0052cc"
   description: "repo-setup, config, ci/cd"
 
-- name: "feat-util"
+- name: "feat"
   color: "0052cc"
-  description: "base-utility"
+  description: "every feature not in config and agent"
 
 - name: "good first issue"
   color: "7057ff"
