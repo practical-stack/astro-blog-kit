@@ -463,7 +463,7 @@ astroExpressiveCode({
 
 Works out of the box with automatic detection.
 
-### Netlify / Cloudflare Pages
+### Netlify
 
 ```bash
 # Build command
@@ -472,6 +472,110 @@ pnpm build
 # Output directory
 dist
 ```
+
+### Cloudflare
+
+Cloudflare recommends **Cloudflare Workers** for new projects. You can also use
+**Cloudflare Pages** for existing projects.
+
+#### Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up) (free tier
+  available)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/get-started/)
+  installed
+
+```bash
+pnpm add -D wrangler
+```
+
+#### Option 1: Cloudflare Workers (Recommended)
+
+1. **Create `wrangler.jsonc`** in your project root:
+
+```jsonc
+{
+  "name": "astro-blog-kit",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+  },
+}
+```
+
+2. **Build and deploy**:
+
+```bash
+pnpm build && npx wrangler deploy
+```
+
+3. **Preview locally** (optional):
+
+```bash
+pnpm build && npx wrangler dev
+```
+
+#### Option 2: Cloudflare Pages
+
+1. **Create `wrangler.jsonc`** in your project root:
+
+```jsonc
+{
+  "name": "astro-blog-kit",
+  "compatibility_date": "2025-01-01",
+  "pages_build_output_dir": "./dist",
+}
+```
+
+2. **Build and deploy**:
+
+```bash
+pnpm build && npx wrangler pages deploy ./dist
+```
+
+3. **Preview locally** (optional):
+
+```bash
+pnpm build && npx wrangler pages dev ./dist
+```
+
+#### Deploy with CI/CD (GitHub Integration)
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) →
+   **Workers & Pages** → **Create**
+2. Select **Import a repository** and connect your GitHub account
+3. Choose your repository and configure:
+   - **Build command**: `pnpm build`
+   - **Deploy command**: `npx wrangler deploy` (Workers) or leave empty (Pages)
+   - **Build output directory**: `dist`
+4. Click **Save and Deploy**
+
+Your site will be available at `https://<project-name>.workers.dev` or
+`https://<project-name>.pages.dev`.
+
+#### Troubleshooting
+
+**Custom 404 page not working (Workers)**
+
+Add `not_found_handling` to your `wrangler.jsonc`:
+
+```jsonc
+{
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+  },
+}
+```
+
+**Hydration mismatch errors**
+
+Disable Auto Minify in Cloudflare dashboard: **Speed** → **Optimization** →
+**Auto Minify** → Disable all options.
+
+For more details, see
+[Astro's Cloudflare deployment guide](https://docs.astro.build/en/guides/deploy/cloudflare/).
 
 ---
 
