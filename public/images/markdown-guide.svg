@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0f3460"/>
+      <stop offset="100%" style="stop-color:#533483"/>
+    </linearGradient>
+    <linearGradient id="codeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d2d44"/>
+      <stop offset="100%" style="stop-color:#1f1f32"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="420" fill="url(#bg)" rx="12"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="720" cy="80" r="120" fill="#533483" opacity="0.1"/>
+  <circle cx="100" cy="350" r="80" fill="#0f3460" opacity="0.15"/>
+  
+  <!-- Main content card -->
+  <rect x="40" y="40" width="720" height="340" rx="8" fill="#252542" opacity="0.6"/>
+  
+  <!-- Header section -->
+  <rect x="60" y="60" width="680" height="60" rx="6" fill="url(#accent)" opacity="0.4"/>
+  
+  <!-- Markdown icon (M with down arrow) -->
+  <g transform="translate(80, 72)">
+    <rect width="36" height="36" rx="4" fill="#e94560"/>
+    <text x="18" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">M↓</text>
+  </g>
+  
+  <!-- Title text -->
+  <text x="130" y="98" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#ffffff">Markdown Style Guide</text>
+  
+  <!-- Subtitle -->
+  <text x="400" y="98" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#8892b0">마크다운 스타일 가이드</text>
+  
+  <!-- Code block section -->
+  <rect x="60" y="140" width="320" height="220" rx="6" fill="url(#codeGrad)"/>
+  
+  <!-- Code block header -->
+  <rect x="60" y="140" width="320" height="30" rx="6" fill="#3d3d5c"/>
+  <circle cx="80" cy="155" r="5" fill="#ff5f56"/>
+  <circle cx="98" cy="155" r="5" fill="#ffbd2e"/>
+  <circle cx="116" cy="155" r="5" fill="#27ca40"/>
+  <text x="280" y="160" font-family="monospace" font-size="11" fill="#8892b0">markdown</text>
+  
+  <!-- Code content -->
+  <text x="80" y="195" font-family="monospace" font-size="13" fill="#c792ea"># Heading 1</text>
+  <text x="80" y="218" font-family="monospace" font-size="13" fill="#c792ea">## Heading 2</text>
+  <text x="80" y="248" font-family="monospace" font-size="13" fill="#89ddff">**bold**</text>
+  <text x="155" y="248" font-family="monospace" font-size="13" fill="#c3e88d">*italic*</text>
+  <text x="80" y="278" font-family="monospace" font-size="13" fill="#ffcb6b">`code`</text>
+  <text x="80" y="308" font-family="monospace" font-size="13" fill="#82aaff">- list item</text>
+  <text x="80" y="331" font-family="monospace" font-size="13" fill="#82aaff">- another item</text>
+  
+  <!-- Preview section -->
+  <rect x="400" y="140" width="340" height="220" rx="6" fill="#1e1e32"/>
+  
+  <!-- Preview header -->
+  <rect x="400" y="140" width="340" height="30" rx="6" fill="#2a2a45"/>
+  <text x="420" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8892b0">Preview</text>
+  
+  <!-- Preview content -->
+  <text x="420" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="bold" fill="#ffffff">Heading 1</text>
+  <rect x="420" y="210" width="140" height="2" fill="#e94560" opacity="0.5"/>
+  
+  <text x="420" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#ccd6f6">Heading 2</text>
+  
+  <text x="420" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="bold" fill="#ccd6f6">bold</text>
+  <text x="465" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-style="italic" fill="#ccd6f6">italic</text>
+  
+  <rect x="420" y="288" width="45" height="20" rx="3" fill="#3d3d5c"/>
+  <text x="428" y="302" font-family="monospace" font-size="12" fill="#c3e88d">code</text>
+  
+  <!-- List bullets -->
+  <circle cx="428" cy="330" r="3" fill="#e94560"/>
+  <text x="440" y="335" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#a8b2d1">list item</text>
+  
+  <circle cx="428" cy="352" r="3" fill="#e94560"/>
+  <text x="440" y="357" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#a8b2d1">another item</text>
+  
+  <!-- Arrow between sections -->
+  <path d="M 385 250 L 395 250" stroke="#e94560" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 390 245 L 398 250 L 390 255" fill="#e94560"/>
+</svg>

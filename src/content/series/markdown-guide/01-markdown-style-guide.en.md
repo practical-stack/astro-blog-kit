@@ -1,24 +1,27 @@
 ---
-title: 'Markdown Style Guide'
-slug: 'markdown-style-guide'
-date: '2025-05-25'
+title: "Markdown Style Guide"
+slug: "markdown-style-guide"
+date: "2025-05-25"
 part: 1
 draft: false
-series: 'markdown-guide'
-category: 'guide'
+series: "markdown-guide"
+category: "guide"
 tags:
-  - 'markdown'
-  - 'guide'
-description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
+  - "markdown"
+  - "guide"
+description:
+  "Here is a sample of some basic Markdown syntax that can be used when writing
+  Markdown content in Astro."
 lang: en
 ---
 
-Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
+Here is a sample of some basic Markdown syntax that can be used when writing
+Markdown content in Astro.
 
 ## Headings
 
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level
-while `<h6>` is the lowest.
+The following HTML `<h1>`—`<h6>` elements represent six levels of section
+headings. `<h1>` is the highest section level while `<h6>` is the lowest.
 
 ## H2
 
@@ -32,11 +35,24 @@ while `<h6>` is the lowest.
 
 ## Paragraph
 
-Markdown has become the standard for writing documentation, README files, and blog posts across the development community. Its simplicity and readability make it an ideal choice for **technical writers** and developers alike. The lightweight markup syntax allows you to focus on content while maintaining consistent formatting that can be easily converted to HTML or other formats.
+Markdown has become the standard for writing documentation, README files, and
+blog posts across the development community. Its simplicity and readability make
+it an ideal choice for **technical writers** and developers alike. The
+lightweight markup syntax allows you to focus on content while maintaining
+consistent formatting that can be easily converted to HTML or other formats.
 
-When writing in Markdown, it's essential to follow established conventions to ensure your documents are accessible and maintainable. Proper heading hierarchy, consistent list formatting, and appropriate use of emphasis help create documents that are both **human-readable** in their raw form and beautifully rendered when processed. For more details, check out the [Markdown Guide](https://www.markdownguide.org/).
+When writing in Markdown, it's essential to follow established conventions to
+ensure your documents are accessible and maintainable. Proper heading hierarchy,
+consistent list formatting, and appropriate use of emphasis help create
+documents that are both **human-readable** in their raw form and beautifully
+rendered when processed. For more details, check out the
+[Markdown Guide](https://www.markdownguide.org/).
 
-The beauty of Markdown lies in its versatility and widespread adoption across platforms like [GitHub](https://github.com), [GitLab](https://gitlab.com), and countless static site generators. This universality means that learning Markdown well is an **investment that pays dividends** across your entire development workflow.
+The beauty of Markdown lies in its versatility and widespread adoption across
+platforms like [GitHub](https://github.com), [GitLab](https://gitlab.com), and
+countless static site generators. This universality means that learning Markdown
+well is an **investment that pays dividends** across your entire development
+workflow.
 
 ## Images
 
@@ -48,36 +64,37 @@ The beauty of Markdown lies in its versatility and widespread adoption across pl
 
 ### Output
 
-![blog placeholder](/typescript.webp)
+![Markdown Style Guide](/images/markdown-guide.svg)
 
 ## Callouts
 
-Callouts are used to highlight important information. We support Obsidian-style callouts via the `@r4ai/remark-callout` plugin.
+Callouts are used to highlight important information. We support Obsidian-style
+callouts via the `@r4ai/remark-callout` plugin.
 
 ### Syntax
 
 ```markdown
-> [!note] Title
-> Write callout content here.
+> [!note] Title Write callout content here.
 ```
 
 ### Output
 
-> [!note] Note
-> This is a note callout example. Use it to highlight important information or additional explanations.
+> [!note] Note This is a note callout example. Use it to highlight important
+> information or additional explanations.
 
-> [!tip] Tip
-> Use this to share useful tips or recommendations.
+> [!tip] Tip Use this to share useful tips or recommendations.
 
-> [!warning] Warning
-> Use this to alert readers about something that requires attention.
+> [!warning] Warning Use this to alert readers about something that requires
+> attention.
 
-For more callout styles (`info`, `question`, `caution`, `bug`, etc.), see the [Markdown Callout Style Guide](/series/markdown-guide/markdown-callout-guide.en).
+For more callout styles (`info`, `question`, `caution`, `bug`, etc.), see the
+[Markdown Callout Style Guide](/series/markdown-guide/markdown-callout-guide.en).
 
 ## Blockquotes
 
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be
-within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
+The blockquote element represents content that is quoted from another source,
+optionally with a citation which must be within a `footer` or `cite` element,
+and optionally with in-line changes such as annotations and abbreviations.
 
 ### Blockquote without attribution
 
@@ -98,18 +115,19 @@ within a `footer` or `cite` element, and optionally with in-line changes such as
 #### Syntax
 
 ```markdown
-> Don't communicate by sharing memory, share memory by communicating.<br>
-> — <cite>Rob Pike[^1]</cite>
+> Don't communicate by sharing memory, share memory by communicating.<br> —
+> <cite>Rob Pike[^1]</cite>
 ```
 
 #### Output
 
-> Don't communicate by sharing memory, share memory by communicating.<br>
-> — <cite>Rob Pike[^1]</cite>
+> Don't communicate by sharing memory, share memory by communicating.<br> —
+> <cite>Rob Pike[^1]</cite>
 
 [^1]:
-    The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during
-    Gopherfest, November 18, 2015.
+    The above quote is excerpted from Rob Pike's
+    [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest,
+    November 18, 2015.
 
 ## Tables
 
@@ -131,8 +149,9 @@ within a `footer` or `cite` element, and optionally with in-line changes such as
 
 ### Syntax
 
-we can use 3 backticks ``` in new line and write snippet and close with 3 backticks on new line and to highlight
-language specific syntac, write one word of language name after first 3 backticks, for eg. html, javascript, css,
+we can use 3 backticks ``` in new line and write snippet and close with 3
+backticks on new line and to highlight language specific syntac, write one word
+of language name after first 3 backticks, for eg. html, javascript, css,
 markdown, typescript, txt, bash
 
 ````markdown
@@ -225,7 +244,8 @@ markdown, typescript, txt, bash
 
 ## Math Equations (KaTeX)
 
-This blog supports mathematical equations using KaTeX. You can write both inline and block equations.
+This blog supports mathematical equations using KaTeX. You can write both inline
+and block equations.
 
 ### Syntax
 
@@ -233,6 +253,7 @@ This blog supports mathematical equations using KaTeX. You can write both inline
 Inline: $E = mc^2$
 
 Block:
+
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
@@ -246,7 +267,8 @@ $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
 
-For more math syntax (Greek letters, matrices, integrals, limits, etc.), see the [Markdown KaTeX Math Guide](/series/markdown-guide/markdown-katex-guide.en).
+For more math syntax (Greek letters, matrices, integrals, limits, etc.), see the
+[Markdown KaTeX Math Guide](/series/markdown-guide/markdown-katex-guide.en).
 
 ## Other Elements — abbr, sub, sup, kbd, mark
 
@@ -259,9 +281,11 @@ H<sub>2</sub>O
 
 X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
 
-Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the session.
+Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the
+session.
 
-Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
+Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and
+other small creatures.
 ```
 
 ### Output
@@ -272,6 +296,8 @@ H<sub>2</sub>O
 
 X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
 
-Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the session.
+Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the
+session.
 
-Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
+Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and
+other small creatures.
