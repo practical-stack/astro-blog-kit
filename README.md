@@ -3,6 +3,8 @@
 A modern, feature-rich blog template built with Astro 5. Includes i18n support,
 dark mode, code highlighting, math rendering, and more.
 
+**[Live Demo](https://astro-blog-kit.p-iknow-dev.workers.dev/)**
+
 ## Features
 
 - **Astro 5** - Fast, modern static site generator
