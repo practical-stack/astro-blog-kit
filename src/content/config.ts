@@ -4,12 +4,12 @@ import { LOCALES } from "@/config/locale";
 
 const posts = defineCollection({
   loader: glob({
-    pattern: "**/*.md",
+    pattern: "**/*.{md,mdx}",
     base: "./src/content/posts",
     // 파일 경로 기반으로 id 생성 (frontmatter slug 대신)
     generateId: ({ entry }) => {
       // entry는 파일 경로에서 확장자를 제외한 값 (예: "log/첫삽은아득하지만")
-      return entry.replace(/\.md$/, "");
+      return entry.replace(/\.mdx?$/, "");
     },
   }),
   schema: z.object({
@@ -45,9 +45,9 @@ const series = defineCollection({
 // 시리즈에 속한 글들 (_index.md 제외)
 const seriesPosts = defineCollection({
   loader: glob({
-    pattern: "**/[!_]*.md",
+    pattern: "**/[!_]*.{md,mdx}",
     base: "./src/content/series",
-    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+    generateId: ({ entry }) => entry.replace(/\.mdx?$/, ""),
   }),
   schema: z.object({
     title: z.string(),

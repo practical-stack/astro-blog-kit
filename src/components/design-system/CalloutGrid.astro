@@ -1,0 +1,21 @@
+---
+// Grid container for callout demo items
+---
+
+<div class="callout-grid">
+  <slot />
+</div>
+
+<style>
+  .callout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .callout-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

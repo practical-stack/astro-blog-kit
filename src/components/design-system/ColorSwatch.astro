@@ -1,0 +1,19 @@
+---
+interface Props {
+  color: string; // CSS variable like "var(--chakra-gray-50)" or hex
+  size?: "sm" | "md" | "lg";
+}
+
+const { color, size = "md" } = Astro.props;
+
+const sizeClasses = {
+  sm: "w-10 h-10",
+  md: "w-12 h-12",
+  lg: "w-20 h-20",
+};
+---
+
+<div
+  class:list={["color-swatch rounded-lg border-2 border-[var(--color-subtle)] shrink-0", sizeClasses[size]]}
+  style={`background-color: ${color};`}
+/>

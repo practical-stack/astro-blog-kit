@@ -1,0 +1,21 @@
+---
+// Grid container for gradient items
+---
+
+<div class="gradient-grid">
+  <slot />
+</div>
+
+<style>
+  .gradient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .gradient-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

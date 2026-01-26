@@ -1,0 +1,370 @@
+---
+title: "Design System"
+description:
+  "블로그에서 사용하는 디자인 토큰을 시각화하고 테스트할 수 있습니다."
+date: 2025-01-01
+slug: design-system
+lang: ko
+category: design-system
+tags: ["design", "tokens", "colors"]
+---
+
+import {
+  TokenGrid,
+  TokenItem,
+  GradientGrid,
+  GradientItem,
+  CalloutGrid,
+  CalloutDemo,
+} from "@/components/design-system";
+
+**컬러 시스템:** Tailwind 기본 팔레트 + Chakra UI Override
+
+## 컬러 시스템 아키텍처
+
+2단계 컬러 시스템: Primitive Colors (기본 팔레트) → Semantic Tokens (의미론적
+역할)
+
+### 1단계: Primitive Colors
+
+- **Tailwind 기본 팔레트**: blue, sky, emerald, amber, violet, red, rose 등
+- **Chakra UI Override**: gray, blue (Tailwind와 다른 톤)
+- **Brand Colors**: 로고 그라디언트, 브랜드 고유 색상
+
+### 2단계: Semantic Tokens
+
+- **Surface/Background**: 페이지 배경, 카드 배경
+- **Text Hierarchy**: default, secondary, tertiary, muted, subtle
+- **Accent Colors**: 주요 강조색, 링크, 버튼
+- **Component Colors**: header, tag, table, blockquote 등
+
+## Primitive Colors: Chakra UI Palette
+
+Tailwind와 다른 Chakra UI 컬러 (Override)
+
+<TokenGrid title="Chakra Gray Scale">
+  <TokenItem
+    name="--chakra-gray-50"
+    value="#f7fafc"
+    color="var(--chakra-gray-50)"
+  />
+  <TokenItem
+    name="--chakra-gray-100"
+    value="#edf2f7"
+    color="var(--chakra-gray-100)"
+  />
+  <TokenItem
+    name="--chakra-gray-200"
+    value="#e2e8f0"
+    color="var(--chakra-gray-200)"
+  />
+  <TokenItem
+    name="--chakra-gray-300"
+    value="#cbd5e0"
+    color="var(--chakra-gray-300)"
+  />
+  <TokenItem
+    name="--chakra-gray-400"
+    value="#a0aec0"
+    color="var(--chakra-gray-400)"
+  />
+  <TokenItem
+    name="--chakra-gray-500"
+    value="#718096"
+    color="var(--chakra-gray-500)"
+  />
+  <TokenItem
+    name="--chakra-gray-600"
+    value="#4a5568"
+    color="var(--chakra-gray-600)"
+  />
+  <TokenItem
+    name="--chakra-gray-700"
+    value="#2d3748"
+    color="var(--chakra-gray-700)"
+  />
+  <TokenItem
+    name="--chakra-gray-800"
+    value="#1a202c"
+    color="var(--chakra-gray-800)"
+  />
+  <TokenItem
+    name="--chakra-gray-900"
+    value="#171923"
+    color="var(--chakra-gray-900)"
+  />
+</TokenGrid>
+
+<TokenGrid title="Chakra Blue Scale">
+  <TokenItem
+    name="--chakra-blue-50"
+    value="#ebf8ff"
+    color="var(--chakra-blue-50)"
+  />
+  <TokenItem
+    name="--chakra-blue-100"
+    value="#bee3f8"
+    color="var(--chakra-blue-100)"
+  />
+  <TokenItem
+    name="--chakra-blue-200"
+    value="#90cdf4"
+    color="var(--chakra-blue-200)"
+  />
+  <TokenItem
+    name="--chakra-blue-300"
+    value="#63b3ed"
+    color="var(--chakra-blue-300)"
+  />
+  <TokenItem
+    name="--chakra-blue-400"
+    value="#4299e1"
+    color="var(--chakra-blue-400)"
+  />
+  <TokenItem
+    name="--chakra-blue-500"
+    value="#3182ce"
+    color="var(--chakra-blue-500)"
+  />
+  <TokenItem
+    name="--chakra-blue-600"
+    value="#2c5282"
+    color="var(--chakra-blue-600)"
+  />
+  <TokenItem
+    name="--chakra-blue-700"
+    value="#2b6cb0"
+    color="var(--chakra-blue-700)"
+  />
+</TokenGrid>
+
+## Brand Colors
+
+브랜드 고유 색상 (로고, 헤더 등)
+
+<GradientGrid>
+  <GradientItem
+    name="Brand Gradient"
+    gradient="linear-gradient(135deg, var(--brand-gradient-start) 0%, var(--brand-gradient-end) 100%)"
+    value="--brand-gradient-start → --brand-gradient-end"
+    usage="#0066FF → #00D4FF"
+    large
+  />
+  <GradientItem
+    name="Brand Accent"
+    gradient="var(--brand-accent)"
+    value="--brand-accent"
+    usage="#0088DD (서브타이틀)"
+  />
+</GradientGrid>
+
+## Semantic Tokens
+
+의미론적 역할로 정의된 컬러 (Primitive Colors 참조)
+
+<TokenGrid title="Surface & Background">
+  <TokenItem
+    name="--color-surface"
+    value=""
+    color="var(--color-surface)"
+    reference="→ var(--color-white)"
+  />
+  <TokenItem
+    name="--color-background"
+    value=""
+    color="var(--color-background)"
+    reference="→ var(--chakra-gray-50)"
+  />
+</TokenGrid>
+
+<TokenGrid title="Text Hierarchy">
+  <TokenItem
+    name="--color-default"
+    value=""
+    color="var(--color-default)"
+    reference="→ var(--chakra-gray-800)"
+  />
+  <TokenItem
+    name="--color-secondary"
+    value=""
+    color="var(--color-secondary)"
+    reference="→ var(--chakra-gray-600)"
+  />
+  <TokenItem
+    name="--color-tertiary"
+    value=""
+    color="var(--color-tertiary)"
+    reference="→ var(--chakra-gray-500)"
+  />
+  <TokenItem
+    name="--color-muted"
+    value=""
+    color="var(--color-muted)"
+    reference="→ var(--chakra-gray-400)"
+  />
+  <TokenItem
+    name="--color-subtle"
+    value=""
+    color="var(--color-subtle)"
+    reference="→ var(--chakra-gray-200)"
+  />
+</TokenGrid>
+
+<TokenGrid title="Accent Colors (Chakra Blue)">
+  <TokenItem
+    name="--color-accent"
+    value=""
+    color="var(--color-accent)"
+    reference="→ var(--chakra-blue-400)"
+  />
+  <TokenItem
+    name="--color-accent-hover"
+    value=""
+    color="var(--color-accent-hover)"
+    reference="→ var(--chakra-blue-500)"
+  />
+  <TokenItem
+    name="--color-accent-light"
+    value=""
+    color="var(--color-accent-light)"
+    reference="→ var(--chakra-blue-300)"
+  />
+  <TokenItem
+    name="--color-accent-lighter"
+    value=""
+    color="var(--color-accent-lighter)"
+    reference="→ var(--chakra-blue-200)"
+  />
+  <TokenItem
+    name="--color-accent-bg"
+    value=""
+    color="var(--color-accent-bg)"
+    reference="→ var(--chakra-blue-50)"
+  />
+  <TokenItem
+    name="--color-accent-border"
+    value=""
+    color="var(--color-accent-border)"
+    reference="→ var(--chakra-blue-200)"
+  />
+</TokenGrid>
+
+## Tailwind Colors (Callout & Tags)
+
+Tailwind 기본 팔레트를 사용하는 컴포넌트
+
+<CalloutGrid>
+  <CalloutDemo
+    type="Note"
+    colorName="Blue"
+    iconColor="var(--color-blue-500)"
+    titleColor="var(--color-blue-600)"
+  />
+  <CalloutDemo
+    type="Info"
+    colorName="Sky"
+    iconColor="var(--color-sky-500)"
+    titleColor="var(--color-sky-600)"
+  />
+  <CalloutDemo
+    type="Tip"
+    colorName="Emerald"
+    iconColor="var(--color-emerald-500)"
+    titleColor="var(--color-emerald-600)"
+  />
+  <CalloutDemo
+    type="Warning"
+    colorName="Amber"
+    iconColor="var(--color-amber-500)"
+    titleColor="var(--color-amber-600)"
+  />
+  <CalloutDemo
+    type="Question"
+    colorName="Violet"
+    iconColor="var(--color-violet-500)"
+    titleColor="var(--color-violet-600)"
+  />
+  <CalloutDemo
+    type="Caution"
+    colorName="Red"
+    iconColor="var(--color-red-500)"
+    titleColor="var(--color-red-600)"
+  />
+  <CalloutDemo
+    type="Bug"
+    colorName="Rose"
+    iconColor="var(--color-rose-500)"
+    titleColor="var(--color-rose-600)"
+  />
+</CalloutGrid>
+
+## Tag Gradient System (Tailwind)
+
+태그에 사용되는 6가지 그라디언트 (Tailwind 컬러 사용)
+
+<GradientGrid>
+  <GradientItem
+    name="Blue"
+    gradient="linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-400) 100%)"
+    value="blue-500 → blue-400"
+  />
+  <GradientItem
+    name="Indigo"
+    gradient="linear-gradient(135deg, var(--color-indigo-500) 0%, var(--color-indigo-400) 100%)"
+    value="indigo-500 → indigo-400"
+  />
+  <GradientItem
+    name="Sky"
+    gradient="linear-gradient(135deg, var(--color-sky-500) 0%, var(--color-sky-400) 100%)"
+    value="sky-500 → sky-400"
+  />
+  <GradientItem
+    name="Violet"
+    gradient="linear-gradient(135deg, var(--color-violet-500) 0%, var(--color-violet-400) 100%)"
+    value="violet-500 → violet-400"
+  />
+  <GradientItem
+    name="Cyan"
+    gradient="linear-gradient(135deg, var(--color-cyan-500) 0%, var(--color-cyan-400) 100%)"
+    value="cyan-500 → cyan-400"
+  />
+  <GradientItem
+    name="Deep Blue"
+    gradient="linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-500) 100%)"
+    value="blue-600 → blue-500"
+  />
+</GradientGrid>
+
+## Component Examples
+
+### Tags with Gradients
+
+<div class="post-tags preview-box">
+  <span class="post-tag">
+    <span class="post-tag-hash">#</span>typescript
+  </span>
+  <span class="post-tag">
+    <span class="post-tag-hash">#</span>react
+  </span>
+  <span class="post-tag">
+    <span class="post-tag-hash">#</span>astro
+  </span>
+  <span class="post-tag">
+    <span class="post-tag-hash">#</span>design
+  </span>
+  <span class="post-tag">
+    <span class="post-tag-hash">#</span>tailwind
+  </span>
+  <span class="post-tag">
+    <span class="post-tag-hash">#</span>css
+  </span>
+</div>
+
+<style>{`
+  .preview-box {
+    padding: 24px;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-subtle);
+    border-radius: 8px;
+  }
+`}</style>

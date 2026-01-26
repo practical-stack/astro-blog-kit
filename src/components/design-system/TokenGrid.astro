@@ -1,0 +1,39 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="token-category">
+  {title && <h3>{title}</h3>}
+  <div class="token-grid">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .token-category {
+    margin-bottom: 32px;
+  }
+
+  .token-category h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--color-secondary);
+  }
+
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .token-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
