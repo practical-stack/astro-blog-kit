@@ -56,12 +56,12 @@
 }
 
 @utility post-date {
-  @apply mb-1.5 text-[13px];
+  @apply mb-1.5 text-xs;
   color: var(--color-tertiary);
 }
 
 @utility post-excerpt {
-  @apply mb-3 text-[15px] leading-relaxed break-all;
+  @apply mb-3 text-sm leading-relaxed break-all;
   color: var(--color-secondary);
 }
 
@@ -70,7 +70,7 @@
 }
 
 @utility post-tag {
-  @apply mr-1.5 mb-1.5 inline-block rounded-full px-2.5 py-1.5 text-[13px] no-underline transition-all duration-300;
+  @apply mr-1.5 mb-1.5 inline-block rounded-full px-2.5 py-1.5 text-xs no-underline transition-all duration-300;
   color: var(--color-white);
   background: linear-gradient(
     135deg,

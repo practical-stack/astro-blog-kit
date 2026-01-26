@@ -19,17 +19,17 @@ const navLabels = {
 const labels = navLabels[lang];
 ---
 
-<nav class="grid grid-cols-2 gap-4 mt-12 max-w-[776px]">
+<nav class="grid grid-cols-2 gap-4 mt-12 max-w-3xl">
   {prevPost ? (
     <a href={getHref(prevPost)} class="flex flex-col gap-2 p-5 border border-accent rounded-lg no-underline transition-all duration-200 hover:bg-accent-bg col-start-1">
       <span class="text-sm text-muted">{labels.prev}</span>
-      <span class="text-base font-medium text-accent leading-[1.4]">{prevPost.data.title}</span>
+      <span class="text-base font-medium text-accent leading-snug">{prevPost.data.title}</span>
     </a>
   ) : <div />}
   {nextPost ? (
     <a href={getHref(nextPost)} class="flex flex-col gap-2 p-5 border border-accent rounded-lg no-underline transition-all duration-200 hover:bg-accent-bg col-start-2 text-right">
       <span class="text-sm text-muted">{labels.next}</span>
-      <span class="text-base font-medium text-accent leading-[1.4]">{nextPost.data.title}</span>
+      <span class="text-base font-medium text-accent leading-snug">{nextPost.data.title}</span>
     </a>
   ) : <div />}
 </nav>
