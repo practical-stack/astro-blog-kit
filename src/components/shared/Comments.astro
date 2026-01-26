@@ -1,0 +1,72 @@
+---
+import { siteConfig } from "@/config/site";
+---
+
+<section class="giscus"></section>
+
+<script is:inline define:vars={{ config: siteConfig.giscus }}>
+  function getCurrentTheme() {
+    const theme = document.documentElement.getAttribute("data-theme");
+    if (theme) return theme === "dark" ? "dark" : "light";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function loadGiscus() {
+    const container = document.querySelector(".giscus");
+    if (!container || container.querySelector("script")) return;
+
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.setAttribute("data-repo", config.repo);
+    script.setAttribute("data-repo-id", config.repoId);
+    script.setAttribute("data-category", config.category);
+    script.setAttribute("data-category-id", config.categoryId);
+    script.setAttribute("data-mapping", config.mapping);
+    script.setAttribute("data-strict", config.strict);
+    script.setAttribute("data-reactions-enabled", config.reactionsEnabled);
+    script.setAttribute("data-emit-metadata", config.emitMetadata);
+    script.setAttribute("data-input-position", config.inputPosition);
+    script.setAttribute("data-theme", getCurrentTheme());
+    script.setAttribute("data-lang", config.lang);
+    script.setAttribute("data-loading", config.loading);
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+    container.appendChild(script);
+  }
+
+  function updateGiscusTheme() {
+    const iframe = document.querySelector("iframe.giscus-frame");
+    if (!iframe) return;
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: getCurrentTheme() } } },
+      "https://giscus.app"
+    );
+  }
+
+  // 초기화 - 중복 실행 방지
+  if (!window.__giscusInitialized) {
+    window.__giscusInitialized = true;
+
+    // 테마 변경 감지
+    new MutationObserver((mutations) => {
+      if (mutations.some(m => m.attributeName === "data-theme")) {
+        updateGiscusTheme();
+      }
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    // View Transitions 지원
+    document.addEventListener("astro:page-load", loadGiscus);
+  }
+
+  // 현재 페이지 로드
+  loadGiscus();
+</script>
+
+<style>
+  .giscus {
+    max-width: 100%;
+  }
+</style>

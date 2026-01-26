@@ -1,0 +1,54 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostList from "@/components/post/PostList.astro";
+import Bio from "@/components/shared/Bio.astro";
+import { LOCALES, type Locale } from "@/config/locale";
+import {
+  getPostsByLang,
+  getSeriesPostsByLang,
+  filterPosts,
+  filterSeriesPosts,
+} from "@/utils/posts/query";
+import { getPostUrl } from "@/utils/posts/url";
+import type { PostWithLang, SeriesPostWithLang, PostEntry } from "@/utils/posts/types";
+
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+
+// 포스트
+const posts = await getPostsByLang({
+  lang,
+  filter: filterPosts,
+});
+
+// 시리즈 포스트
+const seriesPosts = await getSeriesPostsByLang({
+  lang,
+  filter: filterSeriesPosts,
+});
+
+// 두 Collection 합치기
+type AnyPost = PostWithLang | SeriesPostWithLang;
+const allPosts: AnyPost[] = [...posts, ...seriesPosts];
+
+// 날짜순 정렬 (내림차순)
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// href 생성 함수
+const getHref = (post: PostEntry) => getPostUrl(post, lang);
+---
+
+<BaseLayout lang={lang}>
+  <div class="h-8"></div>
+  <Bio lang={lang} />
+  <hr class="mt-8 mb-7 border-0 border-b border-divider" />
+
+  <PostList posts={sortedPosts} getHref={getHref} />
+</BaseLayout>

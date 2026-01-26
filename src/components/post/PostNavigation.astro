@@ -1,0 +1,35 @@
+---
+import type { Locale } from "@/config/locale";
+import type { PostEntry } from "@/utils/posts/types";
+
+interface Props {
+  prevPost: PostEntry | null;
+  nextPost: PostEntry | null;
+  lang: Locale;
+  getHref: (post: PostEntry) => string;
+}
+
+const { prevPost, nextPost, lang, getHref } = Astro.props;
+
+// Navigation labels
+const navLabels = {
+  en: { prev: '← Prev', next: 'Next →' },
+  ko: { prev: '← 이전 글', next: '다음 글 →' },
+};
+const labels = navLabels[lang];
+---
+
+<nav class="grid grid-cols-2 gap-4 mt-12 max-w-[776px]">
+  {prevPost ? (
+    <a href={getHref(prevPost)} class="flex flex-col gap-2 p-5 border border-accent rounded-lg no-underline transition-all duration-200 hover:bg-accent-bg col-start-1">
+      <span class="text-sm text-muted">{labels.prev}</span>
+      <span class="text-base font-medium text-accent leading-[1.4]">{prevPost.data.title}</span>
+    </a>
+  ) : <div />}
+  {nextPost ? (
+    <a href={getHref(nextPost)} class="flex flex-col gap-2 p-5 border border-accent rounded-lg no-underline transition-all duration-200 hover:bg-accent-bg col-start-2 text-right">
+      <span class="text-sm text-muted">{labels.next}</span>
+      <span class="text-base font-medium text-accent leading-[1.4]">{nextPost.data.title}</span>
+    </a>
+  ) : <div />}
+</nav>

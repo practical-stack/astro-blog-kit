@@ -1,0 +1,152 @@
+---
+import { getCollection } from "astro:content";
+import { type Locale } from "@/config/locale";
+import { getPostUrl, getSeriesUrl } from "@/utils/posts/url";
+import { sortSeriesPosts } from "@/utils/posts/sort";
+import { getPostLang } from "@/utils/posts/query";
+import { isPublished } from "@/utils/filter";
+import { formatDateLocalized } from "@/utils/date";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const seriesCollection = await getCollection(
+  "series",
+  (s) => getPostLang(s) === lang
+);
+const seriesPostsCollection = await getCollection(
+  "seriesPosts",
+  (post) => isPublished(post) && getPostLang(post) === lang
+);
+
+// 시리즈 id에서 폴더명 추출 (예: "markdown-guide/_index.en" -> "markdown-guide")
+const getSeriesSlug = (id: string) => id.replace(/\/_index.*$/, "");
+
+// 시리즈 글 id에서 폴더명 추출 (예: "시리즈-테스트/01-시작하기" -> "시리즈-테스트")
+const getPostSeriesSlug = (id: string) => id.split("/")[0];
+
+// 시리즈별 포스트 그룹화
+const seriesMap = new Map<string, typeof seriesPostsCollection>();
+seriesPostsCollection.forEach((post) => {
+  const seriesSlug = getPostSeriesSlug(post.id);
+  const posts = seriesMap.get(seriesSlug) || [];
+  posts.push(post);
+  seriesMap.set(seriesSlug, posts);
+});
+
+// 시리즈 목록 생성 (글 개수 순 정렬)
+const series = seriesCollection
+  .map((s) => {
+    const slug = getSeriesSlug(s.id);
+    const posts = seriesMap.get(slug) || [];
+    return {
+      slug,
+      title: s.data.title,
+      description: s.data.description,
+      posts: sortSeriesPosts(posts),
+    };
+  })
+  .filter((s) => s.posts.length > 0)
+  .sort((a, b) => b.posts.length - a.posts.length);
+
+const totalPosts = series.reduce((sum, s) => sum + s.posts.length, 0);
+
+const texts = {
+  en: {
+    title: "Series",
+    seriesLabel: " series across ",
+    postsLabel: " posts",
+    parts: (count: number) => `${count} parts`,
+    noSeries: "No series found.",
+  },
+  ko: {
+    title: "시리즈",
+    seriesLabel: "개 시리즈, ",
+    postsLabel: "개 포스트",
+    parts: (count: number) => `${count}편`,
+    noSeries: "시리즈가 없습니다.",
+  },
+} as const;
+
+const t = texts[lang];
+---
+
+<div class="mb-8">
+  <h1 class="mb-8 text-3xl font-bold">{t.title}</h1>
+  <p class="text-[15px] text-muted -mt-6">
+    <span class="text-accent-highlight">{series.length}</span>
+    {t.seriesLabel}
+    <span class="text-accent-highlight">{totalPosts}</span>
+    {t.postsLabel}
+  </p>
+</div>
+
+{
+  series.length > 0 ? (
+    <div class="space-y-8">
+      {series.map(({ slug, title, description, posts: seriesPosts }) => (
+        <div class="rounded-xl border border-subtle bg-background p-6">
+          <div class="mb-4 flex items-center justify-between">
+            <a href={getSeriesUrl(slug, lang)} class="link-title">
+              <h2 class="text-xl font-bold">{title}</h2>
+            </a>
+            <span class="rounded-full bg-accent/10 px-3 py-1 text-sm font-medium text-accent">
+              {t.parts(seriesPosts.length)}
+            </span>
+          </div>
+          {description && <p class="mb-4 text-sm text-muted">{description}</p>}
+
+          <div class="series-timeline relative ml-6 pl-6">
+            {seriesPosts.map((post, index) => (
+              <a
+                href={getPostUrl(post, lang)}
+                class="group series-item relative mb-3 block no-underline last:mb-0"
+              >
+                <span class="series-number absolute -left-6 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-subtle text-xs font-medium transition-colors group-hover:bg-accent group-hover:text-white">
+                  {index + 1}
+                </span>
+                <div class="series-content rounded-lg px-3 py-2 transition-colors group-hover:bg-subtle/30">
+                  <span class="series-title font-medium transition-colors group-hover:text-accent">
+                    {post.data.title}
+                  </span>
+                  <span class="ml-2 text-sm text-muted">
+                    {formatDateLocalized(post.data.date, lang)}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p class="text-muted">{t.noSeries}</p>
+  )
+}
+
+<style is:global>
+  .series-item,
+  .series-item:hover,
+  .series-title {
+    text-decoration: none !important;
+  }
+
+  /* Timeline line connecting circles */
+  .series-item:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    width: 2px;
+    height: calc(100% + 12px);
+    background-color: var(--color-subtle);
+    z-index: 0;
+  }
+
+  .series-number {
+    z-index: 1;
+  }
+</style>
