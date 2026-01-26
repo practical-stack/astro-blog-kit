@@ -23,6 +23,9 @@ const resolveHref = getHref || defaultGetHref;
 
 const spaceToDash = (text: string) => text.replace(/\s+/g, '-');
 
+// 현재 언어 가져오기
+const lang = Astro.currentLocale || 'en';
+
 // 시리즈 포스트에서 시리즈 slug 추출
 const getSeriesSlug = (post: PostEntry) => {
   if (post.collection === "seriesPosts") {
@@ -45,7 +48,7 @@ const author = `@${siteConfig.author.replace(/\s.*$/, "")}`;
       <div class="mb-12" data-post-id={post.id} data-collection={post.collection}>
         {seriesSlug && (
           <div class="mb-1.5">
-            <a href={`/series/${seriesSlug}`} class="inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-medium text-tag-text bg-tag-bg rounded no-underline transition-colors duration-200 hover:bg-accent-bg hover:no-underline">
+            <a href={`/${lang}/series/${seriesSlug}`} class="inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-medium text-tag-text bg-tag-bg rounded no-underline transition-colors duration-200 hover:bg-accent-bg hover:no-underline">
               <span>🗂️</span><span>{seriesSlug}</span>
             </a>
           </div>
@@ -58,7 +61,7 @@ const author = `@${siteConfig.author.replace(/\s.*$/, "")}`;
         {tags.length > 0 && (
           <div class="post-tags">
             {tags.map((tag) => (
-              <a href={`/tags/${tag}`} class="post-tag">
+              <a href={`/${lang}/tags/${tag}`} class="post-tag">
                 <span class="post-tag-hash">#</span>{spaceToDash(tag)}
               </a>
             ))}
