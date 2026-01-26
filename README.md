@@ -11,7 +11,7 @@ dark mode, code highlighting, math rendering, and more.
 - **Dark Mode** - System-aware with manual toggle
 - **Code Highlighting** - Expressive Code with line numbers and diff support
 - **Math Rendering** - KaTeX for LaTeX equations
-- **Callouts** - GitHub-style callout blocks
+- **Callouts** - GitHub/Obsidian-style callout blocks
 - **Comments** - Giscus integration (GitHub Discussions)
 - **SEO** - Open Graph, Twitter Cards, sitemap, RSS
 - **Search** - Built-in search page
@@ -33,104 +33,311 @@ pnpm dev
 
 Open http://localhost:3000
 
-## Configuration
+---
 
-### 1. Site Settings
+## Content Structure
+
+This blog supports **three types of content** organized into Astro Content
+Collections:
+
+### Overview
+
+| Collection    | Location              | Purpose                          | URL Pattern                         |
+| ------------- | --------------------- | -------------------------------- | ----------------------------------- |
+| `posts`       | `src/content/posts/`  | Standalone blog posts            | `/{lang}/posts/{category}/{slug}`   |
+| `series`      | `src/content/series/` | Series metadata (index files)    | `/{lang}/series/{series-slug}`      |
+| `seriesPosts` | `src/content/series/` | Individual posts within a series | `/{lang}/series/{series-slug}/{id}` |
+
+### 1. Regular Posts (`posts`)
+
+Standalone blog posts organized by category.
+
+**Location**: `src/content/posts/{category}/`
+
+```
+src/content/posts/
+├── getting-started/
+│   ├── welcome.en.md        # English version
+│   └── welcome.ko.md        # Korean version
+├── tutorials/
+│   ├── react-basics.en.md
+│   └── react-basics.ko.md
+└── javascript/
+    └── async-await.en.md    # Single language is also fine
+```
+
+**Frontmatter (Required fields marked with \*)**:
+
+```yaml
+---
+title: "My First Post" # * Post title
+description: "A brief summary" # * Used for SEO and previews
+date: 2024-01-01 # * Publication date
+slug: my-first-post # * URL slug (kebab-case, English)
+lang: en # Language (auto-detected from filename)
+category: tutorials # Category name
+tags: ["astro", "blog"] # Tags array
+draft: false # Hidden everywhere when true
+dev-only: false # Hidden in production when true
+img: /path/to/image.webp # Featured image (optional)
+update: 2024-02-01 # Last update date (optional)
+---
+```
+
+**URL Generation**: `/{lang}/posts/{folder-path}/{slug}`
+
+- Example: `src/content/posts/tutorials/intro.en.md` with
+  `slug: getting-started`
+- → URL: `/en/posts/tutorials/getting-started`
+
+### 2. Series
+
+A series is a collection of related posts, like chapters in a book.
+
+**Structure**:
+
+```
+src/content/series/
+└── markdown-guide/              # Series folder
+    ├── _index.en.md             # * Series metadata (English)
+    ├── _index.ko.md             # * Series metadata (Korean)
+    ├── 01-style-guide.en.md     # Chapter 1
+    ├── 01-style-guide.ko.md
+    ├── 02-code-blocks.en.md     # Chapter 2
+    ├── 02-code-blocks.ko.md
+    └── 03-advanced.en.md        # Chapter 3
+```
+
+#### Series Metadata (`_index*.md`)
+
+**Required** for each series. One per language.
+
+```yaml
+---
+title: "Markdown Guide" # * Series title
+description: "Master markdown for blogs" # * Series description
+slug: markdown-guide # Series URL slug
+lang: en # * Language
+---
+Optional introductory content here...
+```
+
+#### Series Posts
+
+Individual chapters/posts within a series.
+
+```yaml
+---
+title: "Style Guide" # * Chapter title
+description: "Basic markdown styling" # * Chapter description
+date: 2024-01-01 # * Publication date
+series: markdown-guide # * Must match series slug
+part: 1 # Order in series (or use filename prefix)
+lang: en # * Language
+category: guide # Optional category
+tags: ["markdown"] # Optional tags
+draft: false # Hidden when true
+dev-only: false # Hidden in prod when true
+---
+```
+
+**Ordering**: Use either `part: N` in frontmatter OR `NN-` filename prefix
+(e.g., `01-`, `02-`).
+
+**URL Generation**: `/{lang}/series/{series-slug}/{file-id}`
+
+- Example: `01-style-guide.en.md` in `markdown-guide/`
+- → URL: `/en/series/markdown-guide/01-style-guide`
+
+---
+
+## Internationalization (i18n)
+
+This blog supports **bilingual content** (English and Korean) out of the box.
+
+### Supported Languages
+
+| Language | Code | Locale  |
+| -------- | ---- | ------- |
+| English  | `en` | `en-US` |
+| Korean   | `ko` | `ko-KR` |
+
+### URL Structure
+
+All URLs are prefixed with the language code:
+
+- English: `/en/posts/...`, `/en/series/...`
+- Korean: `/ko/posts/...`, `/ko/series/...`
+
+### File Naming Convention
+
+Use language suffix before `.md`:
+
+```
+# Posts
+welcome.en.md   → English version
+welcome.ko.md   → Korean version
+
+# Series metadata
+_index.en.md    → English series info
+_index.ko.md    → Korean series info
+
+# Series posts
+01-intro.en.md  → English chapter
+01-intro.ko.md  → Korean chapter
+```
+
+### Adding a New Language
+
+1. **Edit `src/config/locale.ts`**:
+
+```typescript
+export const LOCALES = ["en", "ko", "ja"] as const;
+
+export const LOCALE = {
+  en: "en-US",
+  ko: "ko-KR",
+  ja: "ja-JP", // Add new locale
+} as const;
+```
+
+2. **Update `astro.config.ts`**:
+
+```typescript
+i18n: {
+  locales: ["en", "ko", "ja"],
+  defaultLocale: "en",
+  routing: {
+    prefixDefaultLocale: true,
+  },
+}
+```
+
+3. **Add translations in `src/config/site.ts`**:
+
+```typescript
+description: {
+  en: "English description",
+  ko: "한국어 설명",
+  ja: "日本語の説明",  // Add new translation
+}
+```
+
+4. **Create content files with `.ja.md` suffix**
+
+---
+
+## Personal Configuration Guide
+
+Follow these steps to customize the blog for your own use.
+
+### Step 1: Site Settings
 
 Edit `src/config/site.ts`:
 
 ```typescript
 export const siteConfig = {
-  title: "My Blog",
-  subtitle: "A Developer's Journey",
+  // Basic Info
+  title: "Your Blog Name",
+  subtitle: "Your Tagline",
   description: {
-    en: "Your English description",
-    ko: "한국어 설명",
+    en: "Your English site description for SEO",
+    ko: "한국어 사이트 설명",
   },
   author: "Your Name",
-  siteUrl: "https://your-blog.com",
-  // ... social links, Giscus, analytics
+  siteUrl: "https://yourdomain.com", // No trailing slash
+  ogImage: "/og-image.png",
+
+  // Social Links (remove any you don't need)
+  links: {
+    github: "https://github.com/yourusername",
+    x: "https://x.com/yourusername",
+    linkedIn: "https://linkedin.com/in/yourusername",
+    email: "mailto:you@example.com",
+  },
+
+  // Comments (Giscus) - See https://giscus.app for setup
+  giscus: {
+    repo: "yourusername/your-repo",
+    repoId: "YOUR_REPO_ID", // Get from giscus.app
+    category: "General",
+    categoryId: "YOUR_CATEGORY_ID", // Get from giscus.app
+    mapping: "pathname",
+    // ... other options
+  },
+
+  // Analytics
+  googleAnalyticsId: "G-XXXXXXXXXX", // Leave empty "" to disable
 };
 ```
 
-### 2. Astro Config
+### Step 2: Astro Config
 
 Update `astro.config.ts`:
 
 ```typescript
 export default defineConfig({
-  site: "https://your-blog.com",
+  site: "https://yourdomain.com", // Match siteUrl above
   // ...
 });
 ```
 
-### 3. Assets
+### Step 3: Replace Assets
 
-Replace placeholder files in `public/`:
+Update files in `public/`:
 
 | File           | Purpose                    | Recommended Size |
 | -------------- | -------------------------- | ---------------- |
-| `logo.svg`     | Header logo (mobile)       | 44x44px          |
+| `logo.svg`     | Header logo                | 44x44px          |
 | `favicon.png`  | Browser tab icon           | 32x32px          |
 | `og-image.png` | Default social share image | 1200x630px       |
-| `profile.webp` | Author profile photo       | 128x128px        |
+| `profile.webp` | Author bio photo           | 128x128px        |
 
-## Writing Content
+### Step 4: Remove Sample Content
 
-### Blog Posts
+```bash
+# Delete sample posts
+rm -rf src/content/posts/getting-started/
 
-Create files in `src/content/posts/{category}/`:
+# Delete sample series
+rm -rf src/content/series/markdown-guide/
+```
 
-```markdown
+### Step 5: Create Your First Post
+
+```bash
+mkdir -p src/content/posts/blog
+```
+
+Create `src/content/posts/blog/hello-world.en.md`:
+
+```yaml
 ---
-title: "My First Post"
-description: "A brief description"
+title: "Hello World"
+description: "My first blog post"
 date: 2024-01-01
-slug: my-first-post
-category: tutorials
-tags: ["astro", "blog"]
----
-
-Your content here...
-```
-
-### Series
-
-Create a folder in `src/content/series/{series-name}/`:
-
-```
-src/content/series/my-series/
-├── _index.en.md      # Series metadata (English)
-├── _index.ko.md      # Series metadata (Korean)
-├── 01-intro.en.md    # First post
-├── 01-intro.ko.md
-├── 02-setup.en.md    # Second post
-└── 02-setup.ko.md
-```
-
-Series metadata (`_index*.md`):
-
-```markdown
----
-title: "My Series"
-description: "Learn something step by step"
-slug: my-series
+slug: hello-world
 lang: en
+category: blog
+tags: ["intro"]
 ---
+Welcome to my blog!
 ```
 
-Series post:
+### Configuration Checklist
 
-```markdown
+- [ ] Updated `src/config/site.ts` with your info
+- [ ] Updated `astro.config.ts` site URL
+- [ ] Replaced `public/logo.svg`
+- [ ] Replaced `public/favicon.png`
+- [ ] Replaced `public/og-image.png`
+- [ ] Replaced `public/profile.webp`
+- [ ] Set up Giscus for comments (optional)
+- [ ] Added Google Analytics ID (optional)
+- [ ] Removed sample content
+- [ ] Created your first post
+
 ---
-title: "Introduction"
-description: "Getting started"
-date: 2024-01-01
-series: my-series
-part: 1
-lang: en
----
-```
 
 ## Commands
 
@@ -143,94 +350,73 @@ lang: en
 | `pnpm format`     | Format code with Prettier                 |
 | `pnpm lint`       | Lint code with ESLint                     |
 
+---
+
 ## Project Structure
 
 ```
 ├── src/
 │   ├── config/
-│   │   ├── site.ts       # Site configuration
-│   │   └── locale.ts     # i18n settings
+│   │   ├── site.ts          # Site configuration (EDIT THIS)
+│   │   └── locale.ts        # i18n settings
 │   ├── content/
-│   │   ├── posts/        # Blog posts
-│   │   └── series/       # Series posts
+│   │   ├── posts/           # Regular blog posts
+│   │   │   └── {category}/  # Posts organized by category
+│   │   └── series/          # Series content
+│   │       └── {series}/    # Each series in its own folder
+│   │           ├── _index.en.md   # Series metadata
+│   │           └── 01-post.en.md  # Series posts
 │   ├── components/
-│   │   ├── layout/       # Header, Footer
-│   │   ├── post/         # Post-related components
-│   │   ├── series/       # Series components
-│   │   └── shared/       # Bio, Comments, ThemeToggle
-│   ├── layouts/          # Page layouts
-│   ├── pages/[lang]/     # Routes (i18n prefixed)
-│   ├── styles/           # Global CSS
-│   └── utils/            # Utility functions
-├── public/               # Static assets
-├── astro.config.ts       # Astro configuration
+│   │   ├── layout/          # Header, Footer
+│   │   ├── post/            # Post-related components
+│   │   ├── series/          # Series components
+│   │   └── shared/          # Bio, Comments, ThemeToggle
+│   ├── layouts/             # Page layouts
+│   ├── pages/[lang]/        # Routes (i18n prefixed)
+│   ├── styles/              # Global CSS & modules
+│   └── utils/               # Utility functions
+├── public/                  # Static assets (REPLACE THESE)
+├── astro.config.ts          # Astro configuration
 └── package.json
 ```
 
-## Customization
-
-### Adding Languages
-
-1. Edit `src/config/locale.ts`:
-
-```typescript
-export const LOCALES = ["en", "ko", "ja"] as const;
-```
-
-2. Update `astro.config.ts`:
-
-```typescript
-i18n: {
-  locales: ["en", "ko", "ja"],
-  defaultLocale: "en",
-}
-```
-
-3. Add translations in `src/config/site.ts`
-
-### Styling
-
-- Global styles: `src/styles/global.css`
-- Theme colors: `src/styles/modules/theme.css`
-- Typography: `src/styles/modules/prose.css`
-
-### Comments (Giscus)
-
-1. Go to https://giscus.app
-2. Configure your repository
-3. Update `siteConfig.giscus` in `src/config/site.ts`
-
-### Analytics
-
-Set your Google Analytics ID in `siteConfig.googleAnalyticsId`, or leave empty
-to disable.
+---
 
 ## Markdown Features
 
 ### Code Blocks
 
-````markdown
-```typescript title="example.ts"
-const hello = "world";
-```
-````
-
-With line highlighting:
+With title and line highlighting:
 
 ````markdown
-```typescript {2-3}
+```typescript title="example.ts" {2-3}
 const a = 1;
 const b = 2; // highlighted
 const c = 3; // highlighted
 ```
 ````
 
+With diff notation:
+
+````markdown
+```typescript
+const old = "removed";  // [!code --]
+const new = "added";    // [!code ++]
+```
+````
+
 ### Callouts
 
-```markdown
-> [!NOTE] This is a note callout
+Obsidian-style callouts:
 
-> [!WARNING] This is a warning
+```markdown
+> [!NOTE] Important note This is highlighted information.
+
+> [!TIP] Pro tip A helpful suggestion.
+
+> [!WARNING] Be careful Something to watch out for.
+
+> [!CAUTION] Danger Critical warning.
 ```
 
 ### Math (KaTeX)
@@ -245,31 +431,47 @@ $$
 $$
 ```
 
-## Deployment
+---
 
-### Netlify
+## Customization
 
-```bash
-# Build command
-pnpm build
+### Styling
 
-# Publish directory
-dist
+- **Global styles**: `src/styles/global.css`
+- **Theme colors**: `src/styles/modules/theme.css`
+- **Typography**: `src/styles/modules/prose.css`
+- **Callouts**: `src/styles/modules/callouts.css`
+
+### Code Highlighting
+
+Themes are configured in `astro.config.ts`:
+
+```typescript
+astroExpressiveCode({
+  themes: ["dracula-soft", "night-owl"], // [light, dark]
+  // ...
+});
 ```
+
+---
+
+## Deployment
 
 ### Vercel
 
 Works out of the box with automatic detection.
 
-### Cloudflare Pages
+### Netlify / Cloudflare Pages
 
 ```bash
 # Build command
 pnpm build
 
-# Build output directory
+# Output directory
 dist
 ```
+
+---
 
 ## License
 
