@@ -21,17 +21,24 @@ dark mode, code highlighting, math rendering, and more.
 
 ## Quick Start
 
-```bash
-# Clone the template
-git clone https://github.com/yourusername/astro-blog-kit.git my-blog
-cd my-blog
+> **DO NOT FORK** - This is a template repository. Use the
+> **[Use this template](https://github.com/practical-stack/astro-blog-kit/generate)**
+> button instead.
 
-# Install dependencies
-pnpm install
-
-# Start development server
-pnpm dev
-```
+1. Click
+   **[Use this template](https://github.com/practical-stack/astro-blog-kit/generate)**
+   → **Create a new repository**
+2. Name your repository (e.g., `my-blog`)
+3. Clone your newly created repository:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/my-blog.git
+   cd my-blog
+   ```
+4. Install dependencies and start:
+   ```bash
+   pnpm install
+   pnpm dev
+   ```
 
 Open http://localhost:3000
 
