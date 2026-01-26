@@ -18,6 +18,8 @@ This template includes:
 - **i18n Support** - Write posts in multiple languages
 - **Dark Mode** - Automatic theme switching
 - **Code Highlighting** - Beautiful syntax highlighting
+- **Series** - Group related posts into organized series
+- **Comments (Giscus)** - GitHub Discussions-based comment system
 
 ## Code Example
 
@@ -50,6 +52,48 @@ $$
 > [!TIP] This is a tip callout. Great for sharing helpful advice.
 
 > [!WARNING] This is a warning callout. Use it for cautions.
+
+## Series
+
+Group related posts into series, like chapters in a book.
+
+```
+src/content/series/
+└── my-series/
+    ├── _index.en.md        # Series metadata
+    ├── 01-intro.en.md      # Chapter 1
+    └── 02-deep-dive.en.md  # Chapter 2
+```
+
+Add the `series` field to your series post frontmatter:
+
+```yaml
+---
+title: "Chapter Title"
+series: my-series # Must match series slug
+part: 1 # Order (or use 01- filename prefix)
+---
+```
+
+## Comments (Giscus)
+
+This template supports GitHub Discussions-based comments via
+[Giscus](https://giscus.app).
+
+To set up:
+
+1. Configure your app at [giscus.app](https://giscus.app)
+2. Fill in the `giscus` section in `src/config/site.ts`
+
+```typescript
+giscus: {
+  repo: "yourusername/your-repo",
+  repoId: "YOUR_REPO_ID",
+  category: "General",
+  categoryId: "YOUR_CATEGORY_ID",
+  // ...
+}
+```
 
 ## Next Steps
 

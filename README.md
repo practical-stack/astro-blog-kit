@@ -236,6 +236,48 @@ description: {
 
 ---
 
+## Comments (Giscus)
+
+This blog uses [Giscus](https://giscus.app) for comments, powered by GitHub
+Discussions.
+
+### Quick Setup
+
+1. Go to **[giscus.app](https://giscus.app)** and follow the configuration
+   wizard
+2. Copy the generated values (`data-repo-id`, `data-category-id`, etc.)
+3. Update `src/config/site.ts`:
+
+```typescript
+giscus: {
+  repo: "yourusername/your-repo",       // Your GitHub repo
+  repoId: "R_kgDOxxxxxx",               // From giscus.app
+  category: "General",                   // Discussion category name
+  categoryId: "DIC_kwDOxxxxxx",         // From giscus.app
+  mapping: "pathname",                   // How to map posts to discussions
+  strict: "0",
+  reactionsEnabled: "1",
+  emitMetadata: "1",
+  inputPosition: "top",
+  lang: "en",                            // Interface language
+  loading: "lazy",
+}
+```
+
+### Resources
+
+- **Configuration Wizard**: [giscus.app](https://giscus.app)
+- **GitHub App**: [github.com/apps/giscus](https://github.com/apps/giscus)
+- **Documentation**:
+  [github.com/giscus/giscus](https://github.com/giscus/giscus#readme)
+- **Advanced Configuration**: [giscus.app/ko](https://giscus.app/ko) (Korean)
+
+### Disabling Comments
+
+Remove or comment out the `giscus` section in `src/config/site.ts`.
+
+---
+
 ## Personal Configuration Guide
 
 Follow these steps to customize the blog for your own use.
@@ -332,6 +374,48 @@ tags: ["intro"]
 ---
 Welcome to my blog!
 ```
+
+### Step 6: Create Your First Series (Optional)
+
+```bash
+mkdir -p src/content/series/my-tutorial
+```
+
+**1. Create series metadata** (`src/content/series/my-tutorial/_index.en.md`):
+
+```yaml
+---
+title: "My Tutorial Series"
+description: "Learn something awesome step by step"
+slug: my-tutorial
+lang: en
+---
+Welcome to this tutorial series!
+```
+
+**2. Create series posts**
+(`src/content/series/my-tutorial/01-introduction.en.md`):
+
+```yaml
+---
+title: "Introduction"
+description: "Getting started with the basics"
+date: 2024-01-01
+series: my-tutorial
+part: 1
+lang: en
+tags: ["tutorial"]
+---
+Let's begin our journey...
+```
+
+**3. Add more chapters** with incrementing `part` numbers or `NN-` filename
+prefixes.
+
+### Step 7: Set Up Comments (Optional)
+
+See the [Comments (Giscus)](#comments-giscus) section above for detailed setup
+instructions.
 
 ### Configuration Checklist
 
