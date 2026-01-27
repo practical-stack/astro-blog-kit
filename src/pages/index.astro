@@ -2,6 +2,9 @@
 // Root index page for redirect to default language
 // This is required by Astro when using prefixDefaultLocale: true
 import "@/styles/global.css";
+import { defaultLocale } from "@/config/locale";
+
+const redirectUrl = `/${defaultLocale}/`;
 ---
 
 <!doctype html>
@@ -9,7 +12,7 @@ import "@/styles/global.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0;url=/en/" />
+    <meta http-equiv="refresh" content={`0;url=${redirectUrl}`} />
     <title>Redirecting...</title>
     <script is:inline>
       (function() {
@@ -37,6 +40,6 @@ import "@/styles/global.css";
   </body>
 </html>
 
-<script>
-  window.location.replace("/en/");
+<script is:inline define:vars={{ redirectUrl }}>
+  window.location.replace(redirectUrl);
 </script>
