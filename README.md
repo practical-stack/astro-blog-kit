@@ -1,5 +1,7 @@
 # Astro Blog Kit
 
+[한국어](./README.ko.md)
+
 A modern, feature-rich blog template built with Astro 5. Includes i18n support,
 dark mode, code highlighting, math rendering, and more.
 
