@@ -4,7 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import PostList from "@/components/post/PostList.astro";
 import { LOCALES, type Locale } from "@/config/locale";
 import { getPostUrl } from "@/utils/posts/url";
-import { extractOrderFromFilename } from "@/utils/posts/sort";
+import { sortSeriesPosts } from "@/utils/posts/sort";
 
 const isDev = import.meta.env.DEV;
 
@@ -53,11 +53,7 @@ export async function getStaticPaths() {
     // Create series listing pages
     seriesCollection.forEach((series) => {
       const slug = getSeriesSlug(series.id);
-      const posts = (seriesPostsMap.get(slug) || []).sort((a, b) => {
-        const orderA = a.data.part ?? extractOrderFromFilename(a.id);
-        const orderB = b.data.part ?? extractOrderFromFilename(b.id);
-        return orderA - orderB;
-      });
+      const posts = sortSeriesPosts(seriesPostsMap.get(slug) || []);
 
       paths.push({
         params: { lang, slug },
